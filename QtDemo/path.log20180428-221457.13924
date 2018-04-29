@@ -1,0 +1,9 @@
+Log file created at: 2018/04/28 22:14:57
+Running on machine: DESKTOP-P7HU6DV
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I0428 22:14:57.647176  8744 config.h:79] reading config file ...
+I0428 22:14:57.653180  8744 config.h:87] config: app name = LDB_APP
+I0428 22:14:57.653180  8744 config.h:99] config: threads = Shaanxi Xi'an
+I0428 22:14:57.653180  8744 config.h:110] config: height = 13759911917
+I0428 22:14:57.653180  8744 config.h:121] config: width = miaomiao@home.com
+I0428 22:14:57.653180  8744 config.h:128] read config file succeed.
