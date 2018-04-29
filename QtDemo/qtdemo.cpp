@@ -36,6 +36,7 @@ void QtDemo::onBtnPicClicked()
 	//ui.m_picLable->setPixmap(QPixmap::fromImage(createImage(256, 256, 9)));
 
 	//ui.m_picLable->repaint();
+	m_task->taskInit("C://pic/phei.avi",40);
 	m_task->start();
 	//ui.m_picLable->setPixmap(QPixmap::fromImage(qimg));
 	

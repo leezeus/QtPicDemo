@@ -34,7 +34,8 @@ public:
 	virtual void process(cv::Mat &input, cv::Mat &output) = 0;
 };
 
-class VideoProcessor {
+class VideoProcessor 
+{
 
 private:
 
@@ -81,13 +82,16 @@ private:
 
 	// to get the next frame 
 	// could be: video file; camera; vector of images
-	bool readNextFrame(cv::Mat& frame) {
+	bool readNextFrame(cv::Mat& frame)
+	{
 
 		if (images.size() == 0)
 			return capture.read(frame);
-		else {
+		else 
+		{
 
-			if (itImg != images.end()) {
+			if (itImg != images.end()) 
+			{
 
 				frame = cv::imread(*itImg);
 				itImg++;
@@ -442,7 +446,8 @@ public:
 	}
 
 	// to grab (and process) the frames of the sequence
-	void run() {
+	void run()
+	{
 
 		// current frame
 		cv::Mat frame;
@@ -455,7 +460,8 @@ public:
 
 		stop = false;
 
-		while (!isStopped()) {
+		while (!isStopped()) 
+		{
 
 			// read next frame if any
 			if (!readNextFrame(frame))
