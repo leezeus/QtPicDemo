@@ -10,13 +10,6 @@
 typedef void(*PROCESSOR)(cv::Mat&, cv::Mat&);
 
 //process interface;
-class FrameProcessor 
-{
-public:
-	// processing method
-	virtual void process(cv::Mat &input, cv::Mat &output) = 0;
-};
-
 
 class Task : public QThread 
 {
@@ -29,7 +22,8 @@ public:
 	bool setInput(int id);
 	bool setInput(const std::vector<std::string>& imgs);
 	void setDelay(long delay);
-	bool taskInit(std::string file_name, long delay);
+	bool taskInit(std::string file_name, long delay, FrameProcessor* frameProcessorPtr);
+	bool taskInit(std::vector<std::string> file_names, long delay, FrameProcessor* frameProcessorPtr);
 	void setFrameProcessor(PROCESSOR frameProcessingCallback);
 	void setFrameProcessor(FrameProcessor* frameProcessorPtr);
 	void callProcess();

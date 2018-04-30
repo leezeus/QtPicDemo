@@ -1,5 +1,6 @@
 #include "picture_convert.h"
-
+#include "glog/logging.h"
+#include "glog/log_severity.h"
 cv::Mat QImage2cvMat(QImage image)
 {
 	cv::Mat mat;
@@ -139,4 +140,30 @@ QImage createImage(int width, int height, int color)
 
 	painter.end();
 	return image;
+}
+
+FaceDetecter::FaceDetecter(std::string path_)
+{
+	//"..//config//haarcascade_fullbody.xml"
+	if (!m_faceClassifier.load(path_)) {
+		LOG(INFO) << "Load haarcascade_mcs_eye.xml failed!";
+	}
+}
+
+void FaceDetecter::process(cv::Mat &input, cv::Mat &output)
+{
+	cv::Mat image_gray;
+	//转为灰度图
+	cv::cvtColor(input, image_gray, CV_BGR2GRAY);
+	//直方图均衡化，增加对比度方便处理
+	equalizeHist(image_gray, image_gray);
+	//检测
+	m_faceClassifier.detectMultiScale(image_gray, m_detectResults, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(20, 60));
+
+	input.copyTo(output);
+	//画出检测到的位置
+	for (size_t eyeIdx = 0; eyeIdx < m_detectResults.size(); eyeIdx++)
+	{
+		rectangle(output, m_detectResults[eyeIdx], cv::Scalar(0, 0, 255));
+	}
 }

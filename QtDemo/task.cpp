@@ -7,6 +7,7 @@ Task::Task(QObject * parent) : QThread(parent) {
 	m_fnumber = 0;
 	m_processorCallFlag = false;
 	m_callIt = false;
+
 	LOG(INFO) << "Task constructed";
 }
 
@@ -19,10 +20,20 @@ Task::~Task()
 	wait();
 }
 
-bool Task::taskInit(std::string file_name, long delay)
+bool Task::taskInit(std::string file_name, long delay, FrameProcessor* frameProcessorPtr)
 {
 	setInput(file_name);
 	setDelay(delay);
+	setFrameProcessor(frameProcessorPtr);
+	LOG(INFO) << "Task init success...";
+	return true;
+}
+
+bool Task::taskInit(std::vector<std::string> file_names, long delay, FrameProcessor* frameProcessorPtr)
+{
+	setInput(file_names);
+	setDelay(delay);
+	setFrameProcessor(frameProcessorPtr);
 	LOG(INFO) << "Task init success...";
 	return true;
 }
@@ -71,7 +82,6 @@ long Task::getFrameNumber()
 	}
 }
 
-
 void Task::run() 
 {
 	
@@ -86,11 +96,9 @@ void Task::run()
 
 	while (m_runFlag)
 	{
-
 		// read next frame if any
 		if (!readNextFrame(frame))
 			break;
-
 		// calling the process function or method
 		if (m_callIt)
 		{
@@ -102,8 +110,7 @@ void Task::run()
 			else if (m_frameProcessor)
 			{ 
 				m_frameProcessor->process(frame, output);
-			}
-				
+			}	
 			// increment frame number
 			m_fnumber++;
 
@@ -119,7 +126,6 @@ void Task::run()
 		{
 			msleep(m_delay);
 		}
-		
 		// check if we should stop
 		if (m_frameToStop >= 0 && getFrameNumber() == m_frameToStop)
 		{

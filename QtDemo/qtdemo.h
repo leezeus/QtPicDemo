@@ -22,6 +22,7 @@ private:
 	void receivePic(QImage pic);
 private:
 	Task * m_task;
+	FrameProcessor * m_frameProcesser;
 };
 
 #endif // QTDEMO_H
